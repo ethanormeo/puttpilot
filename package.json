@@ -1,0 +1,19 @@
+{
+  "name": "puttpilot",
+  "version": "1.0.0",
+  "description": "Point your phone camera at a mini-golf hole, tap the corners + ball + cup, and PuttPilot paints the **exact aim line** — including **bank shots off the walls** — with the power to sink it. Runs **100% on your device**: no backend, no accounts, no uploads, no tracking, no cost.",
+  "main": "sw.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "puppeteer-core": "^25.1.0"
+  }
+}

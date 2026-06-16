@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>PuttPilot — AR Mini-Golf Aim Caddie</title>
+<meta name="description" content="Point your camera at the hole. PuttPilot draws the exact aim line and bank-shot path to sink it. On-device, free, private." />
+<meta name="theme-color" content="#0a0e14" />
+<!-- NOTE: apple-mobile-web-app-capable is intentionally OMITTED so the iOS
+     home-screen icon opens in Safari, where getUserMedia is reliable. -->
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<link rel="icon" type="image/png" href="icons/icon-192.png" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- live camera + HUD -->
+<div id="stage">
+  <video id="cam" playsinline muted autoplay></video>
+  <canvas id="hud"></canvas>
+</div>
+
+<!-- top status bar -->
+<header id="topbar" class="hidden">
+  <div class="brand"><span class="logo">◎</span> PuttPilot</div>
+  <div id="status" class="status">—</div>
+  <button id="helpBtn" class="icon-btn" aria-label="Help">?</button>
+</header>
+
+<!-- readout chip -->
+<div id="readout" class="readout hidden"></div>
+
+<!-- bottom control dock -->
+<footer id="dock" class="hidden">
+  <div id="stepHint" class="step-hint">Tap the 4 corners of the lane</div>
+
+  <div id="powerWrap" class="power-wrap hidden">
+    <label class="power-label">Power <span id="powerVal">—</span></label>
+    <input id="power" type="range" min="0" max="100" value="60" />
+  </div>
+
+  <div class="btn-row">
+    <button id="undoBtn" class="btn ghost">Undo</button>
+    <button id="altBtn" class="btn ghost hidden">Next route</button>
+    <button id="slopeBtn" class="btn ghost">Slope</button>
+    <button id="wallBtn" class="btn ghost">+ Wall</button>
+    <button id="freezeBtn" class="btn ghost">Freeze</button>
+    <button id="resetBtn" class="btn danger">Reset</button>
+  </div>
+</footer>
+
+<!-- intro / permission priming -->
+<div id="intro" class="overlay">
+  <div class="card">
+    <div class="hero-logo">◎</div>
+    <h1>PuttPilot</h1>
+    <p class="tag">Your AR mini-golf aim caddie</p>
+    <ol class="how">
+      <li><b>Frame the hole</b> — point your phone down the lane.</li>
+      <li><b>Tap the 4 corners</b> of the playing surface.</li>
+      <li><b>Tap the ball</b>, then <b>tap the hole</b>.</li>
+      <li>PuttPilot draws the <b>exact line</b> — including bank shots.</li>
+    </ol>
+    <button id="startBtn" class="btn primary big">Start Camera</button>
+    <p class="fineprint">100% on your device. No account, no upload, no tracking. Your camera never leaves your phone.</p>
+  </div>
+</div>
+
+<!-- camera-denied / error recovery -->
+<div id="denied" class="overlay hidden">
+  <div class="card">
+    <div class="hero-logo warn">⚠</div>
+    <h1>Camera needed</h1>
+    <p id="deniedMsg" class="tag">PuttPilot needs your camera to see the hole.</p>
+    <ul class="how">
+      <li>Tap <b>Retry</b> and choose <b>Allow</b>.</li>
+      <li>On iPhone, open this link in <b>Safari</b> (not an in-app browser).</li>
+      <li>Check <b>Settings ▸ Safari ▸ Camera</b> is set to Allow.</li>
+    </ul>
+    <button id="retryBtn" class="btn primary big">Retry</button>
+    <button id="safariBtn" class="btn ghost">How to open in Safari</button>
+  </div>
+</div>
+
+<!-- help sheet -->
+<div id="help" class="overlay hidden">
+  <div class="card scroll">
+    <h1>How to use</h1>
+    <ul class="how">
+      <li><b>Hold steady.</b> The overlay is locked to where you tapped. If you move the phone a lot, tap <b>Reset</b> and recalibrate (or <b>Freeze</b> the frame first).</li>
+      <li><b>Corners:</b> tap the 4 corners of the flat playing surface in any order.</li>
+      <li><b>Ball &amp; hole:</b> tap the ball, then the cup.</li>
+      <li><b>Bank shots:</b> if the straight line is blocked, PuttPilot finds the wall bounce. Tap <b>Next route</b> to see alternates.</li>
+      <li><b>Slope:</b> tap <b>Slope</b>, then drag in the downhill direction (longer drag = steeper). The line curves accordingly.</li>
+      <li><b>+ Wall:</b> add an interior wall/obstacle edge by tapping its two ends.</li>
+      <li><b>Power:</b> the slider shows how hard to hit. Green = it drops. Match the suggested mark.</li>
+    </ul>
+    <p class="fineprint">PuttPilot is a visual guide, not a guarantee — real turf has nap and slope it can't see. Use it to read the line, then trust your stroke.</p>
+    <button id="helpClose" class="btn primary big">Got it</button>
+  </div>
+</div>
+
+<script src="js/geometry.js"></script>
+<script src="js/solver.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

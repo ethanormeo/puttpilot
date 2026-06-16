@@ -1,0 +1,16 @@
+{
+  "name": "PuttPilot — AR Mini-Golf Aim Caddie",
+  "short_name": "PuttPilot",
+  "description": "Point your camera at the hole. PuttPilot draws the exact aim line and bank-shot path to sink it. On-device, free, private.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0e14",
+  "theme_color": "#0a0e14",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
