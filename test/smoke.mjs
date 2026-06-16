@@ -90,7 +90,13 @@ try {
   ok('readout shows an aim instruction', /aim|straight/i.test(state.readout), JSON.stringify(state.readout));
   ok('power control revealed', !state.powerHidden);
 
+  // let the markerless tracking loop run many frames against the (moving) fake camera
+  await new Promise((r) => setTimeout(r, 900));
+  ok('Live Lock tracking ran without errors', pageErrors.length === 0, pageErrors.join(' | '));
+
   // exercise a few buttons for runtime safety
+  await page.click('#lockBtn').catch(() => {});   // toggle tracking off (pin)
+  await page.click('#lockBtn').catch(() => {});   // back on (re-init tracker)
   await page.click('#slopeBtn').catch(() => {});
   await page.mouse.click(200, 480); await page.mouse.move(230, 430); await page.mouse.up().catch(() => {});
   await page.click('#freezeBtn').catch(() => {});
@@ -98,7 +104,7 @@ try {
   await page.click('#altBtn').catch(() => {});
   await page.click('#helpBtn').catch(() => {});
   await page.click('#helpClose').catch(() => {});
-  await new Promise((r) => setTimeout(r, 200));
+  await new Promise((r) => setTimeout(r, 300));
 
   const shot = path.join('/tmp', 'puttpilot-smoke.png');
   await page.screenshot({ path: shot });

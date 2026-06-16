@@ -41,6 +41,7 @@
   </div>
 
   <div class="btn-row">
+    <button id="lockBtn" class="btn ghost active hidden">🔒 Live Lock</button>
     <button id="undoBtn" class="btn ghost">Undo</button>
     <button id="altBtn" class="btn ghost hidden">Next route</button>
     <button id="slopeBtn" class="btn ghost">Slope</button>
@@ -88,7 +89,7 @@
   <div class="card scroll">
     <h1>How to use</h1>
     <ul class="how">
-      <li><b>Hold steady.</b> The overlay is locked to where you tapped. If you move the phone a lot, tap <b>Reset</b> and recalibrate (or <b>Freeze</b> the frame first).</li>
+      <li><b>Live Lock</b> tracks the lane as you move the phone, so the line stays glued to the surface. If you move fast or the surface is plain, tracking can slip — just <b>tap the screen to re-lock</b>, or turn Live Lock off to pin the overlay to a still frame.</li>
       <li><b>Corners:</b> tap the 4 corners of the flat playing surface in any order.</li>
       <li><b>Ball &amp; hole:</b> tap the ball, then the cup.</li>
       <li><b>Bank shots:</b> if the straight line is blocked, PuttPilot finds the wall bounce. Tap <b>Next route</b> to see alternates.</li>
@@ -103,6 +104,7 @@
 
 <script src="js/geometry.js"></script>
 <script src="js/solver.js"></script>
+<script src="js/tracker.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

@@ -10,6 +10,8 @@ Point your phone camera at a mini-golf hole, tap the corners + ball + cup, and P
 3. **Solve** — a physics simulator (rolling friction, wall restitution, optional slope) sweeps every aim angle and finds the shot that drops — direct or banked.
 4. **Aim** — the glowing line, bounce points, aim angle, and suggested power are drawn back over your live camera view.
 
+**Live Lock** (markerless tracking): after calibrating, PuttPilot tracks the lane corners frame-to-frame and re-solves the homography every frame, so the aim line **stays glued to the real surface as you move the phone** — the same class of in-browser computer vision that powers glasses/makeup virtual try-on, just tracking ground feature points instead of a face (no WebXR needed, works on iOS Safari). Tap to re-lock if tracking slips; toggle it off to pin the overlay to a still frame.
+
 Extras: **slope** (drag downhill — the line curves), **+ wall** (add interior obstacle edges), **alternate routes**, **freeze frame** for steady aiming, **power** slider.
 
 ## Why a phone web app and not the Meta Ray-Bans?
@@ -18,6 +20,7 @@ Researched and decided: as of mid-2026 the Ray-Ban Display dev platform **splits
 ## Tech
 - Vanilla HTML/CSS/JS — no framework, no build step, pure static site.
 - Hand-rolled homography + 2D ray-cast/reflect physics (`js/geometry.js`, `js/solver.js`) — no heavy CV dependency.
+- Markerless planar tracking (`js/tracker.js`) — ZNCC patch-matching optical flow on the lane corners, pure JS (~3 KB; the stock OpenCV.js build ships without the optical-flow module, so this is hand-rolled rather than a 10 MB WASM dependency).
 - PWA (manifest + service worker) — installable + offline.
 - Hosted free on GitHub Pages over HTTPS (required for camera).
 
@@ -25,6 +28,8 @@ Researched and decided: as of mid-2026 the Ray-Ban Display dev platform **splits
 ```bash
 node test/test.js          # unit tests (geometry + solver)
 node test/integration.js   # end-to-end calibrate -> solve -> project
+node test/tracker.test.js  # markerless tracker (shift recovery + occlusion)
+node test/smoke.mjs        # real headless-Chrome smoke test (fake camera)
 node tools/make_icons.js   # regenerate PNG icons
 python3 -m http.server 8000  # serve locally (camera needs https on a phone)
 ```

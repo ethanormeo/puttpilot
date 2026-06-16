@@ -1,11 +1,12 @@
 /* PuttPilot service worker — offline cache of the app shell. */
-const CACHE = 'puttpilot-v1';
+const CACHE = 'puttpilot-v2';
 const ASSETS = [
   './',
   './index.html',
   './css/style.css',
   './js/geometry.js',
   './js/solver.js',
+  './js/tracker.js',
   './js/app.js',
   './manifest.webmanifest',
   './icons/icon-192.png',
